@@ -104,7 +104,7 @@ for epoch in range(num_epochs):
         # Record the correct predictions for training data
         correct += (predicted == labels).sum()
 
-        print("Train %s/%s" % (i+1, len(train_load)))
+        #print("Train %s/%s" % (i+1, len(train_load)))
 
     # Record the training loss and training accuracy
     train_loss = iter_loss / len(train_load)
@@ -137,14 +137,14 @@ for epoch in range(num_epochs):
 
         correct += (predicted == labels).sum()
 
-        print("Validation %s/%s" % (i+1, len(val_load)))
+        #print("Validation %s/%s" % (i+1, len(val_load)))
 
     # Record the testing loss and testing accuracy
     val_loss = iter_loss / len(val_load)
     val_accuracy = 100 * correct / len(test_indices)
     stop = time.time()
 
-    print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
+    print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s'
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
 
     if (epoch+1) % 50 == 0:
