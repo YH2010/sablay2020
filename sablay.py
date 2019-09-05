@@ -41,7 +41,7 @@ split1 = int(np.floor(dataset_size * train_split))
 split2 = split1 + int(np.floor(dataset_size * test_split))
 train_indices, test_indices, val_indices = indices[:split1], indices[split1:split2], indices[split2:]
 
-batch_size = 64
+batch_size = 32
 train_load = torch.utils.data.DataLoader(dataset = dataset,
                                          batch_size = batch_size,
                                          sampler = SubsetRandomSampler(train_indices))
@@ -55,7 +55,7 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
                                        sampler = SubsetRandomSampler(val_indices))
 
 #Define the model, the loss function and the optimizer
-model = models.resnet18()
+model = models.resnet152()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
@@ -88,6 +88,7 @@ for epoch in range(num_epochs):
 
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
+            #model = nn.DataParallel(model)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
@@ -126,6 +127,8 @@ for epoch in range(num_epochs):
         labels = Variable(labels)
 
         if torch.cuda.is_available():
+            #model = nn.DataParallel(model)
+            model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
 
