@@ -1,0 +1,33 @@
+Train 1/1, Time:5.021583080291748
+Validation 1/1, Time:5.424986124038696
+Epoch 1/1000, Training Loss: 6.808, Training Accuracy: 0.000, Validation Loss: 5.561, Validation Accuracy: 0.000, Time: 5.425090074539185s
+Train 1/1, Time:5.397313117980957
+Validation 1/1, Time:5.6819610595703125
+Epoch 2/1000, Training Loss: 5.072, Training Accuracy: 71.000, Validation Loss: 5.400, Validation Accuracy: 0.000, Time: 5.6820900440216064s
+Train 1/1, Time:4.814368963241577
+Validation 1/1, Time:5.082366943359375
+Epoch 3/1000, Training Loss: 3.431, Training Accuracy: 57.000, Validation Loss: 5.416, Validation Accuracy: 0.000, Time: 5.0824971199035645s
+Train 1/1, Time:4.92221999168396
+Validation 1/1, Time:5.197734117507935
+Epoch 4/1000, Training Loss: 2.131, Training Accuracy: 57.000, Validation Loss: 4.651, Validation Accuracy: 0.000, Time: 5.197866201400757s
+Train 1/1, Time:5.145498037338257
+Validation 1/1, Time:5.4185590744018555
+Epoch 5/1000, Training Loss: 1.431, Training Accuracy: 57.000, Validation Loss: 4.583, Validation Accuracy: 0.000, Time: 5.4187071323394775s
+Train 1/1, Time:5.257312059402466
+Validation 1/1, Time:5.568975210189819
+Epoch 6/1000, Training Loss: 0.975, Training Accuracy: 64.000, Validation Loss: 4.205, Validation Accuracy: 0.000, Time: 5.569101095199585s
+Train 1/1, Time:5.431450128555298
+Validation 1/1, Time:5.699630975723267
+Epoch 7/1000, Training Loss: 0.710, Training Accuracy: 85.000, Validation Loss: 3.991, Validation Accuracy: 25.000, Time: 5.69973087310791s
+Train 1/1, Time:5.24708104133606
+Validation 1/1, Time:5.523621320724487
+Epoch 8/1000, Training Loss: 0.597, Training Accuracy: 85.000, Validation Loss: 3.516, Validation Accuracy: 0.000, Time: 5.52372407913208s
+Train 1/1, Time:5.323521137237549
+Validation 1/1, Time:5.597707033157349
+Epoch 9/1000, Training Loss: 0.540, Training Accuracy: 85.000, Validation Loss: 3.163, Validation Accuracy: 50.000, Time: 5.597809314727783s
+Train 1/1, Time:4.972692012786865
+Validation 1/1, Time:5.23808217048645
+Epoch 10/1000, Training Loss: 0.455, Training Accuracy: 85.000, Validation Loss: 2.917, Validation Accuracy: 50.000, Time: 5.238193988800049s
+Train 1/1, Time:4.9824628829956055
+Validation 1/1, Time:5.250373125076294
+Epoch 11/1000, Training Loss: 0.400, Training Accuracy: 85.000, Validation Loss: 2.589, Validation Accuracy: 50.000, Time: 5.2504730224609375s
