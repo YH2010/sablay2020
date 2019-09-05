@@ -78,10 +78,9 @@ for epoch in range(num_epochs):
 
     #Reset these below variables to 0 at the begining of every epoch
     correct = 0
-    iterations = 0
     iter_loss = 0.0
 
-    for inputs, labels in train_load:
+    for i, (inputs, labels) in enumerate(train_load):
 
         # Convert torch tensor to Variable
         inputs = Variable(inputs)
@@ -103,11 +102,12 @@ for epoch in range(num_epochs):
 
         # Record the correct predictions for training data
         correct += (predicted == labels).sum()
-        iterations += 1
+
+        print("Train %s/%s" % (i+1, len(train_load)))
 
     # Record the training loss and training accuracy
-    train_loss = iter_loss/iterations
-    train_accuracy = (100 * correct / len(train_indices))
+    train_loss = iter_loss / len(train_load)
+    train_accuracy = 100 * correct / len(train_indices)
 
 
     # # # # #  V A L I D A T I O N  # # # # #
@@ -116,10 +116,9 @@ for epoch in range(num_epochs):
     model.eval()
 
     correct = 0
-    iterations = 0
     iter_loss = 0.0
 
-    for inputs, labels in val_load:
+    for i, (inputs, labels) in enumerate(val_load):
 
         inputs = Variable(inputs)
         labels = Variable(labels)
@@ -136,14 +135,15 @@ for epoch in range(num_epochs):
         iter_loss += loss.data.item()
 
         correct += (predicted == labels).sum()
-        iterations += 1
+
+        print("Validation %s/%s" % (i+1, len(val_load)))
 
     # Record the testing loss and testing accuracy
-    val_loss = iter_loss/iterations
-    val_accuracy = (100 * correct / len(test_indices))
+    val_loss = iter_loss / len(val_load)
+    val_accuracy = 100 * correct / len(test_indices)
     stop = time.time()
 
-    print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s'
+    print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
 
     if (epoch+1) % 50 == 0:
