@@ -55,7 +55,7 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
                                        sampler = SubsetRandomSampler(val_indices))
 
 #Define the model, the loss function and the optimizer
-model = models.resnet18()
+model = models.resnet152()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
@@ -66,7 +66,7 @@ test_loss = []
 train_accuracy = []
 test_accuracy = []
 
-num_epochs = 50
+num_epochs = 1000
 for epoch in range(num_epochs):
 
     start = time.time()
@@ -146,11 +146,12 @@ for epoch in range(num_epochs):
     print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s'
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
 
-#Save the model
-dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
-if not os.path.exists(dirPath):
-	os.makedirs(dirPath)
-torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model.pth']))
+    if (epoch+1) % 50 == 0:
+        #Save the model
+        dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
+        if not os.path.exists(dirPath):
+            os.makedirs(dirPath)
+        torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
 
 #Load the model
 # model.load_state_dict(torch.load('model.pth'))
