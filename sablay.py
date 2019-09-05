@@ -41,7 +41,7 @@ split1 = int(np.floor(dataset_size * train_split))
 split2 = split1 + int(np.floor(dataset_size * test_split))
 train_indices, test_indices, val_indices = indices[:split1], indices[split1:split2], indices[split2:]
 
-batch_size = 15
+batch_size = 64
 train_load = torch.utils.data.DataLoader(dataset = dataset,
                                          batch_size = batch_size,
                                          sampler = SubsetRandomSampler(train_indices))
@@ -75,7 +75,6 @@ for epoch in range(num_epochs):
 
     #Put the network into training mode
     model.train()
-    scheduler.step()
 
     #Reset these below variables to 0 at the begining of every epoch
     correct = 0
@@ -108,7 +107,7 @@ for epoch in range(num_epochs):
 
     # Record the training loss and training accuracy
     train_loss = iter_loss/iterations
-    train_accuracy = (100 * correct / len(train_dataset))
+    train_accuracy = (100 * correct / len(train_indices))
 
 
     # # # # #  V A L I D A T I O N  # # # # #
@@ -141,7 +140,7 @@ for epoch in range(num_epochs):
 
     # Record the testing loss and testing accuracy
     val_loss = iter_loss/iterations
-    val_accuracy = (100 * correct / len(test_dataset))
+    val_accuracy = (100 * correct / len(test_indices))
     stop = time.time()
 
     print('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s'
