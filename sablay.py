@@ -89,6 +89,7 @@ for epoch in range(num_epochs):
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
             #model = nn.DataParallel(model)
+            torch.cuda.set_device(1)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
@@ -105,8 +106,8 @@ for epoch in range(num_epochs):
         # Record the correct predictions for training data
         correct += (predicted == labels).sum()
 
-        sys.stdout.write("Train %s/%s, Time:%ss\n" % (i+1, len(train_load), time.time()-start))
-        sys.stdout.flush()
+        #sys.stdout.write("Train %s/%s, Time:%ss\n" % (i+1, len(train_load), time.time()-start))
+        #sys.stdout.flush()
 
     # Record the training loss and training accuracy
     train_loss = iter_loss / len(train_load)
@@ -128,6 +129,7 @@ for epoch in range(num_epochs):
 
         if torch.cuda.is_available():
             #model = nn.DataParallel(model)
+            torch.cuda.set_device(1)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
@@ -141,8 +143,8 @@ for epoch in range(num_epochs):
 
         correct += (predicted == labels).sum()
 
-        sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
-        sys.stdout.flush()
+        #sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
+        #sys.stdout.flush()
 
     # Record the testing loss and testing accuracy
     val_loss = iter_loss / len(val_load)
