@@ -20,6 +20,14 @@ sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : SGD()\n")
 sys.stdout.write("Learning Rate : 0.01\n\n")
 
+#Define the batch size, the model, the loss function and the optimizer
+batch_size = 32
+model = models.densenet161()
+loss_fcn = nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
+#scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
+device = 0
+
 #Define image transformations
 # transform_left = transforms.Compose([transforms.Resize((224, 224)),
 #                                     transforms.RandomHorizontalFlip(),
@@ -47,7 +55,7 @@ split1 = int(np.floor(dataset_size * train_split))
 split2 = split1 + int(np.floor(dataset_size * test_split))
 train_indices, test_indices, val_indices = indices[:split1], indices[split1:split2], indices[split2:]
 
-batch_size = 32
+# batch_size = 32
 train_load = torch.utils.data.DataLoader(dataset = dataset,
                                          batch_size = batch_size,
                                          sampler = SubsetRandomSampler(train_indices))
@@ -60,11 +68,11 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
                                        batch_size = batch_size,
                                        sampler = SubsetRandomSampler(val_indices))
 
-#Define the model, the loss function and the optimizer
-model = models.densenet161()
-loss_fcn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
-#scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
+# #Define the model, the loss function and the optimizer
+# model = models.densenet161()
+# loss_fcn = nn.CrossEntropyLoss()
+# optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
+# #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
 
 #Define the lists to store the results of loss and accuracy
 train_loss = []
@@ -135,7 +143,6 @@ for epoch in range(num_epochs):
 
         if torch.cuda.is_available():
             #model = nn.DataParallel(model)
-            torch.cuda.set_device(1)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
