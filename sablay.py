@@ -14,6 +14,12 @@ from PIL import Image
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
+sys.stdout.write("Batch Size : 32\n")
+sys.stdout.write("Model : Densenet-161\n")
+sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
+sys.stdout.write("Optimizer : SGD()\n")
+sys.stdout.write("Learning Rate : 0.01\n\n")
+
 #Define image transformations
 # transform_left = transforms.Compose([transforms.Resize((224, 224)),
 #                                     transforms.RandomHorizontalFlip(),
@@ -55,7 +61,7 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
                                        sampler = SubsetRandomSampler(val_indices))
 
 #Define the model, the loss function and the optimizer
-model = models.resnet152()
+model = models.densenet161()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
@@ -151,7 +157,7 @@ for epoch in range(num_epochs):
     val_accuracy = 100 * correct / len(test_indices)
     stop = time.time()
 
-    sys.stdout.write('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n\n'
+    sys.stdout.write('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
     sys.stdout.flush()
 
