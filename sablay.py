@@ -36,7 +36,7 @@ dataset_size = len(dataset)
 indices = list(range(dataset_size))
 np.random.shuffle(indices)
 
-train_split, test_split, val_split = .7, .2, .1
+train_split, test_split, val_split = .6, .2, .2
 split1 = int(np.floor(dataset_size * train_split))
 split2 = split1 + int(np.floor(dataset_size * test_split))
 train_indices, test_indices, val_indices = indices[:split1], indices[split1:split2], indices[split2:]
