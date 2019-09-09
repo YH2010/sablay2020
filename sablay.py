@@ -15,14 +15,14 @@ from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
 sys.stdout.write("Batch Size : 32\n")
-sys.stdout.write("Model : Densenet-161\n")
+sys.stdout.write("Model : VGG-19-BN\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : SGD()\n")
 sys.stdout.write("Learning Rate : 0.01\n\n")
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.densenet161()
+model = models.vgg19_bn()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
@@ -103,7 +103,7 @@ for epoch in range(num_epochs):
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
             #model = nn.DataParallel(model)
-            torch.cuda.set_device(1)
+            torch.cuda.set_device(device)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
