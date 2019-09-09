@@ -172,25 +172,30 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 # Load the model
 model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
 
-for i, (inputs, labels) in enumerate(test_load):
+#iter_loss = 0
+#correct = 0
 
-    inputs = Variable(inputs)
-    labels = Variable(labels)
+#for i, (inputs, labels) in enumerate(test_load):
 
-    if torch.cuda.is_available():
+    #inputs = Variable(inputs)
+    #labels = Variable(labels)
+
+    #if torch.cuda.is_available():
         #model = nn.DataParallel(model)
-        model.cuda()
-        inputs = inputs.cuda()
-        labels = labels.cuda()
+        #model.cuda()
+        #inputs = inputs.cuda()
+        #labels = labels.cuda()
 
-    optimizer.zero_grad()
-    outputs = model(inputs)
-    _, predicted = torch.max(outputs, 1)
-    loss = loss_fcn(outputs, labels)
+    #optimizer.zero_grad()
+    #outputs = model(inputs)
+    #_, predicted = torch.max(outputs, 1)
+    #loss = loss_fcn(outputs, labels)
 
-    iter_loss += loss.data.item()
+    #iter_loss += loss.data.item()
 
-    correct += (predicted == labels).sum()
+    #correct += (predicted == labels).sum()
 
-    #sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
-    #sys.stdout.flush()
+#test_loss = 
+#sys.stdout.write("Test Loss %s, Test Accuracy %s\n" % (test_loss, test_accuracy)
+#sys.stdout.flush()
+
