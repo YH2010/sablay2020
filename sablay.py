@@ -169,7 +169,7 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 #             os.makedirs(dirPath)
 #         torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
 
-Load the model
+# Load the model
 model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
 
 for i, (inputs, labels) in enumerate(test_load):
