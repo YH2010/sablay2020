@@ -15,14 +15,14 @@ from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
 sys.stdout.write("Batch Size : 32\n")
-sys.stdout.write("Model : Densenet-161\n")
+sys.stdout.write("Model : VGG-19-BN\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : SGD()\n")
 sys.stdout.write("Learning Rate : 0.01\n\n")
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.densenet161()
+model = models.vgg19_bn()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
@@ -102,12 +102,22 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 #             inputs = inputs.cuda()
 #             labels = labels.cuda()
 
+<<<<<<< HEAD
 #         optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
 #         outputs = model(inputs)
 #         _, predicted = torch.max(outputs, 1)
 #         loss = loss_fcn(outputs, labels)
 #         loss.backward()                 # Backpropagation
 #         optimizer.step()                # Update the weights
+=======
+        # If we have GPU, shift the data to GPU
+        if torch.cuda.is_available():
+            #model = nn.DataParallel(model)
+            torch.cuda.set_device(device)
+            model.cuda()
+            inputs = inputs.cuda()
+            labels = labels.cuda()
+>>>>>>> 265e44194eb7e6980657cb852c274b024c48f855
 
 #         iter_loss += loss.data.item()   # Accumulate the loss
 
