@@ -170,7 +170,7 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 #         torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
 
 # Load the model
-model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
+model = model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
 
 #iter_loss = 0
 #correct = 0
@@ -199,3 +199,10 @@ model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
 #sys.stdout.write("Test Loss %s, Test Accuracy %s\n" % (test_loss, test_accuracy)
 #sys.stdout.flush()
 
+file_name = sys.argv[1]
+image = Image.open(file_name)
+image = transform(image).float()
+image = Variable(image, requires_grad=True)
+image = image.unsqueeze(0)  #this is for VGG, may not be needed for ResNet
+
+print(model(image))
