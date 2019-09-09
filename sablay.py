@@ -74,106 +74,123 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 # optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 # #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
 
-#Define the lists to store the results of loss and accuracy
-train_loss = []
-test_loss = []
-train_accuracy = []
-test_accuracy = []
+# num_epochs = 1000
+# for epoch in range(num_epochs):
 
-num_epochs = 1000
-for epoch in range(num_epochs):
+#     start = time.time()
 
-    start = time.time()
+#     # # # # #  T R A I N I N G  # # # # #
 
-    # # # # #  T R A I N I N G  # # # # #
+#     #Put the network into training mode
+#     model.train()
 
-    #Put the network into training mode
-    model.train()
+#     #Reset these below variables to 0 at the begining of every epoch
+#     correct = 0
+#     iter_loss = 0.0
 
-    #Reset these below variables to 0 at the begining of every epoch
-    correct = 0
-    iter_loss = 0.0
+#     for i, (inputs, labels) in enumerate(train_load):
 
-    for i, (inputs, labels) in enumerate(train_load):
+#         # Convert torch tensor to Variable
+#         inputs = Variable(inputs)
+#         labels = Variable(labels)
 
-        # Convert torch tensor to Variable
-        inputs = Variable(inputs)
-        labels = Variable(labels)
+#         # If we have GPU, shift the data to GPU
+#         if torch.cuda.is_available():
+#             #model = nn.DataParallel(model)
+#             torch.cuda.set_device(1)
+#             model.cuda()
+#             inputs = inputs.cuda()
+#             labels = labels.cuda()
 
-        # If we have GPU, shift the data to GPU
-        if torch.cuda.is_available():
-            #model = nn.DataParallel(model)
-            torch.cuda.set_device(1)
-            model.cuda()
-            inputs = inputs.cuda()
-            labels = labels.cuda()
+#         optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
+#         outputs = model(inputs)
+#         _, predicted = torch.max(outputs, 1)
+#         loss = loss_fcn(outputs, labels)
+#         loss.backward()                 # Backpropagation
+#         optimizer.step()                # Update the weights
 
-        optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
-        outputs = model(inputs)
-        _, predicted = torch.max(outputs, 1)
-        loss = loss_fcn(outputs, labels)
-        loss.backward()                 # Backpropagation
-        optimizer.step()                # Update the weights
+#         iter_loss += loss.data.item()   # Accumulate the loss
 
-        iter_loss += loss.data.item()   # Accumulate the loss
+#         # Record the correct predictions for training data
+#         correct += (predicted == labels).sum()
 
-        # Record the correct predictions for training data
-        correct += (predicted == labels).sum()
+#         #sys.stdout.write("Train %s/%s, Time:%ss\n" % (i+1, len(train_load), time.time()-start))
+#         #sys.stdout.flush()
 
-        #sys.stdout.write("Train %s/%s, Time:%ss\n" % (i+1, len(train_load), time.time()-start))
-        #sys.stdout.flush()
-
-    # Record the training loss and training accuracy
-    train_loss = iter_loss / len(train_load)
-    train_accuracy = 100 * correct / len(train_indices)
+#     # Record the training loss and training accuracy
+#     train_loss = iter_loss / len(train_load)
+#     train_accuracy = 100 * correct / len(train_indices)
 
 
-    # # # # #  V A L I D A T I O N  # # # # #
+#     # # # # #  V A L I D A T I O N  # # # # #
 
-    #Put the network into evaluation/testing mode
-    model.eval()
+#     #Put the network into evaluation/testing mode
+#     model.eval()
 
-    correct = 0
-    iter_loss = 0.0
+#     correct = 0
+#     iter_loss = 0.0
 
-    for i, (inputs, labels) in enumerate(val_load):
+#     for i, (inputs, labels) in enumerate(val_load):
 
-        inputs = Variable(inputs)
-        labels = Variable(labels)
+#         inputs = Variable(inputs)
+#         labels = Variable(labels)
 
-        if torch.cuda.is_available():
-            #model = nn.DataParallel(model)
-            model.cuda()
-            inputs = inputs.cuda()
-            labels = labels.cuda()
+#         if torch.cuda.is_available():
+#             #model = nn.DataParallel(model)
+#             model.cuda()
+#             inputs = inputs.cuda()
+#             labels = labels.cuda()
 
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        _, predicted = torch.max(outputs, 1)
-        loss = loss_fcn(outputs, labels)
+#         optimizer.zero_grad()
+#         outputs = model(inputs)
+#         _, predicted = torch.max(outputs, 1)
+#         loss = loss_fcn(outputs, labels)
 
-        iter_loss += loss.data.item()
+#         iter_loss += loss.data.item()
 
-        correct += (predicted == labels).sum()
+#         correct += (predicted == labels).sum()
 
-        #sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
-        #sys.stdout.flush()
+#         #sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
+#         #sys.stdout.flush()
 
-    # Record the testing loss and testing accuracy
-    val_loss = iter_loss / len(val_load)
-    val_accuracy = 100 * correct / len(test_indices)
-    stop = time.time()
+#     # Record the testing loss and testing accuracy
+#     val_loss = iter_loss / len(val_load)
+#     val_accuracy = 100 * correct / len(test_indices)
+#     stop = time.time()
 
-    sys.stdout.write('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
-          .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
-    sys.stdout.flush()
+#     sys.stdout.write('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
+#           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
+#     sys.stdout.flush()
 
-    if (epoch+1) % 50 == 0:
-        #Save the model
-        dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
-        if not os.path.exists(dirPath):
-            os.makedirs(dirPath)
-        torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
+#     if (epoch+1) % 50 == 0:
+#         #Save the model
+#         dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
+#         if not os.path.exists(dirPath):
+#             os.makedirs(dirPath)
+#         torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
 
-#Load the model
-# model.load_state_dict(torch.load('model.pth'))
+Load the model
+model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
+
+for i, (inputs, labels) in enumerate(test_load):
+
+    inputs = Variable(inputs)
+    labels = Variable(labels)
+
+    if torch.cuda.is_available():
+        #model = nn.DataParallel(model)
+        model.cuda()
+        inputs = inputs.cuda()
+        labels = labels.cuda()
+
+    optimizer.zero_grad()
+    outputs = model(inputs)
+    _, predicted = torch.max(outputs, 1)
+    loss = loss_fcn(outputs, labels)
+
+    iter_loss += loss.data.item()
+
+    correct += (predicted == labels).sum()
+
+    #sys.stdout.write("Validation %s/%s, Time:%ss\n" % (i+1, len(val_load), time.time()-start))
+    #sys.stdout.flush()
