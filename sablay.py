@@ -102,22 +102,12 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 #             inputs = inputs.cuda()
 #             labels = labels.cuda()
 
-<<<<<<< HEAD
 #         optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
 #         outputs = model(inputs)
 #         _, predicted = torch.max(outputs, 1)
 #         loss = loss_fcn(outputs, labels)
 #         loss.backward()                 # Backpropagation
 #         optimizer.step()                # Update the weights
-=======
-        # If we have GPU, shift the data to GPU
-        if torch.cuda.is_available():
-            #model = nn.DataParallel(model)
-            torch.cuda.set_device(device)
-            model.cuda()
-            inputs = inputs.cuda()
-            labels = labels.cuda()
->>>>>>> 265e44194eb7e6980657cb852c274b024c48f855
 
 #         iter_loss += loss.data.item()   # Accumulate the loss
 
