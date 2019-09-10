@@ -43,7 +43,7 @@ transform = transforms.Compose([transforms.Resize((224, 224)),
                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
 #Load the dataset
-dataset = datasets.ImageFolder(root = os.path.sep.join([config.DATASET_DATASET_PATH, "Ken"]),
+dataset = datasets.ImageFolder(root = os.path.sep.join([config.DATASET_DATASET_PATH, "try"]),
                                transform = transform)
 
 dataset_size = len(dataset)
@@ -170,8 +170,8 @@ val_load = torch.utils.data.DataLoader(dataset = dataset,
 #         torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
 
 # Load the model
-model.load_state_dict(torch.load('output/090719230802/model_200.pth'))
-model.eval()
+model = nn.Module.load_state_dict(torch.load('output/090719230802/model_200.pth'))
+
 #iter_loss = 0
 #correct = 0
 
@@ -204,8 +204,5 @@ image = Image.open(file_name)
 image = transform(image).float()
 image = Variable(image, requires_grad=True)
 image = image.unsqueeze(0)  #this is for VGG, may not be needed for ResNet
-#print(model)
-#print(model(image))
-outputs = model(image)
-_, predicted = torch.max(outputs, 1)
-print(predicted)
+print(model)
+print(model(image))
