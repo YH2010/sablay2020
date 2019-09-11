@@ -105,7 +105,7 @@ for epoch in range(num_epochs):
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
             #model = nn.DataParallel(model)
-            torch.cuda.set_device(1)
+            torch.cuda.set_device(device)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
