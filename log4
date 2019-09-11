@@ -1,6 +1,0 @@
-Batch Size : 32
-Model : VGG-19-BN
-Loss Function : CrossEntropyLoss()
-Optimizer : SGD()
-Learning Rate : 0.01
-
