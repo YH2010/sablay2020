@@ -6,8 +6,6 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 import torchvision.transforms as transforms
 
-#import adabound
-
 import gc, time, os, sys
 import numpy as np
 
@@ -20,15 +18,14 @@ sys.stdout.write("Batch Size : 32\n")
 sys.stdout.write("Model : VGG-19-BN\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : SGD()\n")
-sys.stdout.write("Learning Rate : 0.001\n\n")
-#sys.stdout.write("Final Learning Rate : 0.01\n\n")
+sys.stdout.write("Learning Rate : 0.01\n\n")
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.vgg19_bn()
+model = models.resnet18(pretrained=True)
 loss_fcn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
-#optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
+optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
+#scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
 device = 0
 
 #Define image transformations
@@ -46,7 +43,7 @@ transform = transforms.Compose([transforms.Resize((224, 224)),
                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
 #Load the dataset
-dataset = datasets.ImageFolder(root = os.path.sep.join([config.DATASET_CLASSES_PATH]),
+dataset = datasets.ImageFolder(root = os.path.sep.join([config.DATASET_DATASET_PATH, "try"]),
                                transform = transform)
 
 dataset_size = len(dataset)
@@ -57,11 +54,6 @@ train_split, test_split, val_split = .6, .2, .2
 split1 = int(np.floor(dataset_size * train_split))
 split2 = split1 + int(np.floor(dataset_size * test_split))
 train_indices, test_indices, val_indices = indices[:split1], indices[split1:split2], indices[split2:]
-
-#sys.stdout.write("Train Indices\n%s\n\n"%(train_indices))
-sys.stdout.write("Test Indices\n%s\n\n"%(test_indices))
-#sys.stdout.write("Val Indices\n%s\n\n"%(val_indices))
-sys.stdout.flush()
 
 # batch_size = 32
 train_load = torch.utils.data.DataLoader(dataset = dataset,
@@ -170,7 +162,7 @@ for epoch in range(num_epochs):
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
     sys.stdout.flush()
 
-    if (epoch+1) % 25 == 0:
+    if (epoch+1) % 50 == 0:
         #Save the model
         dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
         if not os.path.exists(dirPath):
