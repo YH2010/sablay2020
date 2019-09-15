@@ -22,7 +22,7 @@ sys.stdout.write("Learning Rate : 0.01\n\n")
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.resnet18(pretrained=True)
+model = models.resnet18()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)

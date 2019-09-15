@@ -15,14 +15,14 @@ from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
 sys.stdout.write("Batch Size : 32\n")
-sys.stdout.write("Model : Resnet18\n")
+sys.stdout.write("Model : Resnet50\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : SGD()\n")
 sys.stdout.write("Learning Rate : 0.01\n\n")
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.resnet18(pretrained=True)
+model = models.resnet50()
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
