@@ -9,45 +9,49 @@ import torchvision.transforms as transforms
 #import adabound
 
 import gc, time, os, sys
+import cv2
 import numpy as np
+import matplotlib as plt
 
 from helpers import config
 from PIL import Image
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
-sys.stdout.write("Batch Size : 32\n")
-sys.stdout.write("Model : VGG-19-BN\n")
-sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
-sys.stdout.write("Optimizer : SGD()\n")
-sys.stdout.write("Learning Rate : 0.001\n\n")
-#sys.stdout.write("Final Learning Rate : 0.01\n\n")
+sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
-model = models.vgg19_bn()
+
+model = models.vgg19_bn(pretrained=True)
+model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1)
 loss_fcn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 #optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
 device = 0
 
-#Define image transformations
-# transform_left = transforms.Compose([transforms.Resize((224, 224)),
-#                                     transforms.RandomHorizontalFlip(),
-#                                     transforms.ToTensor(),
-#                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+sys.stdout.write("Batch Size : %s\n"%(batch_size))
+sys.stdout.write("Model : VGG-19-BN\n")
+sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
+sys.stdout.write("Optimizer : Adam()\n")
+sys.stdout.write("Learning Rate : 0.0001\n\n")
+#sys.stdout.write("Final Learning Rate : 0.01\n\n")
+sys.stdout.flush()
 
-# transform_right = transforms.Compose([transforms.Resize((224, 224)),
-#                                     transforms.ToTensor(),
-#                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+class ImageFolderRevised(datasets.ImageFolder):
+    # override the __getitem__ method that dataloader calls
+    def __getitem__(self, index):
+        path, target = self.imgs[index]
+        img = cv2.imread(path)
+        img = img[:,:,1]
+        img = cv2.equalizeHist(img)
+        img = cv2.resize(img, (224, 224))
+        img = img.reshape((1, 224, 224))
+        img = torch.tensor(img, dtype=torch.float)
+        # img = Image.fromarray(img)
+        return img, target
 
-transform = transforms.Compose([transforms.Resize((224, 224)),
-                                    transforms.ToTensor(),
-                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-
-#Load the dataset
-dataset = datasets.ImageFolder(root = os.path.sep.join([config.DATASET_CLASSES_PATH]),
-                               transform = transform)
+dataset = ImageFolderRevised(root = os.path.sep.join([config.DATASET_DATASET_PATH,"Oct9"]))
 
 dataset_size = len(dataset)
 indices = list(range(dataset_size))
@@ -104,7 +108,6 @@ for epoch in range(num_epochs):
 
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
-            #model = nn.DataParallel(model)
             torch.cuda.set_device(device)
             model.cuda()
             inputs = inputs.cuda()
@@ -144,7 +147,6 @@ for epoch in range(num_epochs):
         labels = Variable(labels)
 
         if torch.cuda.is_available():
-            #model = nn.DataParallel(model)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
@@ -176,3 +178,5 @@ for epoch in range(num_epochs):
         if not os.path.exists(dirPath):
             os.makedirs(dirPath)
         torch.save(model.state_dict(), os.path.sep.join([dirPath, 'model_'+str(epoch+1)+'.pth']))
+        sys.stdout.write("Model saved!\n")
+        sys.stdout.flush()
