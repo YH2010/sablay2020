@@ -1,0 +1,26 @@
+100819182953Batch Size : 32
+Model : Resnet50 (trained)
+Loss Function : CrossEntropyLoss()
+Optimizer : SGD()
+Learning Rate : 0.0001
+
+Traceback (most recent call last):
+  File "diabetic_res50_t_co.py", line 146, in <module>
+    outputs = model(inputs)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/module.py", line 489, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torchvision/models/resnet.py", line 147, in forward
+    x = self.layer4(x)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/module.py", line 489, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/container.py", line 92, in forward
+    input = module(input)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/module.py", line 489, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torchvision/models/resnet.py", line 84, in forward
+    out = self.conv3(out)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/module.py", line 489, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/riza/Desktop/sablay2020/env/lib/python3.5/site-packages/torch/nn/modules/conv.py", line 320, in forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: CUDA out of memory. Tried to allocate 12.25 MiB (GPU 0; 11.92 GiB total capacity; 5.30 GiB already allocated; 10.75 MiB free; 11.03 MiB cached)

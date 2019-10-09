@@ -1,0 +1,14 @@
+resnet18(u,0.01)=done
+resnet18(t,0.01)=done
+resnet50(u,0.01)=done
+resnet50(t,0.01)=done
+
+resnet18(u,0.001)=done
+resnet18(t,0.001)=done
+resnet50(u,0.001)=done
+resnet50(t,0.001)=done
+
+resnet18(u,0.0001)=done
+resnet18(t,0.0001)=done
+resnet50(u,0.0001)=done
+resnet50(t,0.0001)=NOT DONE
