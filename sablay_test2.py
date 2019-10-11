@@ -45,7 +45,8 @@ test_load = torch.utils.data.DataLoader(dataset = dataset,
                                         sampler = SubsetRandomSampler(test_indices))
 
 # # # # #  T E S T I N G  # # # # #
-model = models.vgg19_bn(pretrained=True)model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
+model = models.vgg19_bn(pretrained=True)
+model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
