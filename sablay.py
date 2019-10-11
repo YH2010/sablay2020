@@ -26,14 +26,14 @@ batch_size = 32
 model = models.vgg19_bn(pretrained=True)
 model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1)
 loss_fcn = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.0001)
 #optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
 device = 0
 
 sys.stdout.write("Batch Size : %s\n"%(batch_size))
 sys.stdout.write("Model : VGG-19-BN\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
-sys.stdout.write("Optimizer : Adam()\n")
+sys.stdout.write("Optimizer : SGD()\n")
 sys.stdout.write("Learning Rate : 0.0001\n\n")
 #sys.stdout.write("Final Learning Rate : 0.01\n\n")
 sys.stdout.flush()
