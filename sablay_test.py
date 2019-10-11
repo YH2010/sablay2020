@@ -55,7 +55,7 @@ model.eval()
 correct = 0
 iter_loss = 0.0
 
-for i, (inputs, labels) in enumerate(val_load):
+for i, (inputs, labels) in enumerate(test_load):
 
     inputs = Variable(inputs)
     labels = Variable(labels)
@@ -79,10 +79,9 @@ for i, (inputs, labels) in enumerate(val_load):
     #sys.stdout.flush()
 
 # Record the testing loss and testing accuracy
-val_loss = iter_loss / len(val_load)
-val_accuracy = 100 * correct / len(test_indices)
-stop = time.time()
+test_loss = iter_loss / len(test_load)
+test_accuracy = 100 * correct / len(test_indices)
 
 sys.stdout.write('Testing Loss: {:.3f}, Testing Accuracy: {:.3f}\n'
-        .format(val_loss, val_accuracy))
+        .format(test_loss, test_accuracy))
 sys.stdout.flush()
