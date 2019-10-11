@@ -23,7 +23,8 @@ sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
 
-model = models.resnet50(pretrained=True)
+# model = models.resnet50(pretrained=True)
+model = models.resnet50()
 # model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 model.conv1 = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for ResNet
 loss_fcn = nn.CrossEntropyLoss()
