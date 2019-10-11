@@ -26,7 +26,7 @@ batch_size = 32
 # model = models.resnet50(pretrained=True)
 model = models.resnet50()
 # model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
-model.conv1 = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for ResNet
+model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 #optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
