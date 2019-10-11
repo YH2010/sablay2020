@@ -46,7 +46,7 @@ test_load = torch.utils.data.DataLoader(dataset = dataset,
 
 # # # # #  V A L I D A T I O N  # # # # #
 
-model.load_state_dict(torch.load('output/101119143441/model_100.pth'))
+model = models.load_state_dict(torch.load('output/101119143441/model_100.pth'))
 
 #Put the network into evaluation/testing mode
 model.eval()
