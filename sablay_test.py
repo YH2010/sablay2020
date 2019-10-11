@@ -50,7 +50,8 @@ model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3)
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-model.load_state_dict(torch.load('output/101119143441/model_100.pth'))
+model_name = input()
+model.load_state_dict(torch.load('output/101119143441/'+model_name))
 
 #Put the network into evaluation/testing mode
 model.eval()
