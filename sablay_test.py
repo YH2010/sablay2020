@@ -44,9 +44,12 @@ test_load = torch.utils.data.DataLoader(dataset = dataset,
                                         batch_size = batch_size,
                                         sampler = SubsetRandomSampler(test_indices))
 
-# # # # #  V A L I D A T I O N  # # # # #
+# # # # #  T E S T I N G  # # # # #
 model = models.resnet50(pretrained=True)
 model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3)
+loss_fcn = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+
 model.load_state_dict(torch.load('output/101119143441/model_100.pth'))
 
 #Put the network into evaluation/testing mode
