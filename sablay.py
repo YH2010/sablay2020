@@ -23,16 +23,18 @@ sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
 
-model = models.resnet50(pretrained=True)
+# model = models.resnet50(pretrained=True)
+model = models.densenet161()
+model.features[0] = nn.Conv2d(1, 96, kernel_size=7, stride=2, padding=3, bias=False) # for Densenet
 # model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
-model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
+# model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 #optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
 device = 0
 
 sys.stdout.write("Batch Size : %s\n"%(batch_size))
-sys.stdout.write("Model : ResNet-50\n")
+sys.stdout.write("Model : DenseNet-161\n")
 sys.stdout.write("Loss Function : CrossEntropyLoss()\n")
 sys.stdout.write("Optimizer : Adam()\n")
 sys.stdout.write("Learning Rate : 0.0001\n\n")
