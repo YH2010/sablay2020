@@ -85,8 +85,8 @@ for i, (inputs, labels) in enumerate(test_load):
 
     correct += (predicted == labels).sum()
 
-    for i in range(len(predicted)):
-        confusion_matrix[int(predicted[i])][int(labels[i])] += 1
+    # for i in range(len(predicted)):
+        # confusion_matrix[int(predicted[i])][int(labels[i])] += 1
 
 # Record the testing loss and testing accuracy
 test_loss = iter_loss / len(test_load)
