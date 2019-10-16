@@ -53,7 +53,7 @@ model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for V
 loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-# model_name = input()
+model_name = input()
 # model.load_state_dict(torch.load('output/101119143441/'+model_name))
 model.load_state_dict(torch.load('output/100919232206/'+model_name))
 
