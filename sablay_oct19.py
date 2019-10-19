@@ -116,6 +116,7 @@ for epoch in range(num_epochs):
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
+            class_weights = class_weights.cuda()
 
         optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
         outputs = model(inputs)
@@ -154,6 +155,7 @@ for epoch in range(num_epochs):
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
+            class_weights = class_weights.cuda()
 
         optimizer.zero_grad()
         outputs = model(inputs)
