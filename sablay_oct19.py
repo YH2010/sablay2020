@@ -24,7 +24,7 @@ sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 batch_size = 32
 
 # model = models.resnet50(pretrained=True)
-model = models.vgg19_bn(pretrained=True,num_classes=4)
+model = models.vgg19_bn(num_classes=4)
 # model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 # model.features[0] = nn.Conv2d(1, 96, kernel_size=7, stride=2, padding=3, bias=False) # for Densenet
