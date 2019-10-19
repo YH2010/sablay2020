@@ -20,6 +20,10 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 
+device = 0
+if torch.cuda.is_available():
+    torch.cuda.set_device(device)
+
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
 
@@ -28,11 +32,10 @@ model = models.vgg19_bn(num_classes=4)
 # model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 # model.features[0] = nn.Conv2d(1, 96, kernel_size=7, stride=2, padding=3, bias=False) # for Densenet
-class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0])
+class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0]).cuda()
 loss_fcn = nn.CrossEntropyLoss(weight=class_weights)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 #optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
-device = 0
 
 sys.stdout.write("Batch Size : %s\n"%(batch_size))
 sys.stdout.write("Model : VGG-19-BN\n")
@@ -112,11 +115,9 @@ for epoch in range(num_epochs):
 
         # If we have GPU, shift the data to GPU
         if torch.cuda.is_available():
-            torch.cuda.set_device(device)
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
-            class_weights = class_weights.cuda()
 
         optimizer.zero_grad()           # Clear off the gradient in (w = w - gradient)
         outputs = model(inputs)
@@ -155,7 +156,6 @@ for epoch in range(num_epochs):
             model.cuda()
             inputs = inputs.cuda()
             labels = labels.cuda()
-            class_weights = class_weights.cuda()
 
         optimizer.zero_grad()
         outputs = model(inputs)
