@@ -67,8 +67,6 @@ confusion_matrix = torch.zeros(len(dataset.classes), len(dataset.classes))
 
 for i, (inputs, labels) in enumerate(test_load):
 
-    print(i)
-
     inputs = Variable(inputs)
     labels = Variable(labels)
 
