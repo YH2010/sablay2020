@@ -86,8 +86,8 @@ for i, (inputs, labels) in enumerate(test_load):
 
     correct += (predicted == labels).sum()
 
-    sys.stdout.write(str(i))
-    sys.stdout.flush()
+    # sys.stdout.write(str(i))
+    # sys.stdout.flush()
 
     for i in range(len(predicted)):
         confusion_matrix[int(labels[i])][int(predicted[i])] += 1
