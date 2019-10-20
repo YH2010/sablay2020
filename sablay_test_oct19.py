@@ -22,6 +22,8 @@ from torch.utils.data.sampler import SubsetRandomSampler
 #Define the batch size, the model, the loss function and the optimizer
 batch_size = 32
 device = 1
+if torch.cuda.is_available():
+    torch.cuda.set_device(device)
 
 class ImageFolderRevised(datasets.ImageFolder):
     # override the __getitem__ method that dataloader calls
@@ -71,7 +73,6 @@ for i, (inputs, labels) in enumerate(test_load):
     labels = Variable(labels)
 
     if torch.cuda.is_available():
-        torch.cuda.set_device(device)
         model.cuda()
         inputs = inputs.cuda()
         labels = labels.cuda()
