@@ -32,10 +32,11 @@ model = models.vgg19_bn(num_classes=4)
 # model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 # model.features[0] = nn.Conv2d(1, 96, kernel_size=7, stride=2, padding=3, bias=False) # for Densenet
-class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0]).cuda()
-loss_fcn = nn.CrossEntropyLoss(weight=class_weights)
+# class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0]).cuda()
+# loss_fcn = nn.CrossEntropyLoss(weight=class_weights)
+loss_fcn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
-#optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
+# optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
 
 sys.stdout.write("Batch Size : %s\n"%(batch_size))
 sys.stdout.write("Model : VGG-19-BN\n")
@@ -58,7 +59,7 @@ class ImageFolderRevised(datasets.ImageFolder):
         # img = Image.fromarray(img)
         return img, target
 
-dataset = ImageFolderRevised(root = os.path.sep.join([config.DATASET_DATASET_PATH,"Oct9"]))
+dataset = ImageFolderRevised(root = os.path.sep.join([config.DATASET_DATASET_PATH,"CDGN"]))
 
 dataset_size = len(dataset)
 indices = list(range(dataset_size))
@@ -180,7 +181,7 @@ for epoch in range(num_epochs):
           .format(epoch+1, num_epochs, train_loss, train_accuracy, val_loss, val_accuracy, stop-start))
     sys.stdout.flush()
 
-    if (epoch+1) % 25 == 0:
+    if (epoch+1) % 20 == 0:
         #Save the model
         dirPath = os.path.sep.join([config.OUTPUT_PATH, str(config.TIME)])
         if not os.path.exists(dirPath):
