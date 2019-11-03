@@ -34,8 +34,8 @@ model = models.vgg19_bn(num_classes=4)
 # model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3) # for ResNet
 model.features[0] = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1) # for VGG
 # model.features[0] = nn.Conv2d(1, 96, kernel_size=7, stride=2, padding=3, bias=False) # for Densenet
-# class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0]).cuda()
-# loss_fcn = nn.CrossEntropyLoss(weight=class_weights)
+class_weights = torch.FloatTensor([20.28,3.53,19.47,1.0]).cuda()
+loss_fcn = nn.CrossEntropyLoss(weight=class_weights)
 # optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 optimizer = adabound.AdaBound(model.parameters(), lr=1e-3, final_lr=0.01)
 
