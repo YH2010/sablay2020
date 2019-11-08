@@ -145,7 +145,7 @@ for epoch in range(num_epochs):
 
     # Record the training loss and training accuracy
     train_loss = iter_loss / len(train_load)
-    train_accuracy = 100 * correct / len(train_indices)
+    train_accuracy = 100 * correct / float(len(train_indices))
 
 
     # # # # #  V A L I D A T I O N  # # # # #
@@ -181,7 +181,7 @@ for epoch in range(num_epochs):
 
     # Record the testing loss and testing accuracy
     val_loss = iter_loss / len(val_load)
-    val_accuracy = 100 * correct / len(test_indices)
+    val_accuracy = 100 * correct / float(len(test_indices))
     stop = time.time()
 
     sys.stdout.write('Epoch {}/{}, Training Loss: {:.3f}, Training Accuracy: {:.3f}, Validation Loss: {:.3f}, Validation Accuracy: {:.3f}, Time: {}s\n'
