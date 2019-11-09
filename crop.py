@@ -19,7 +19,7 @@ for c in classes:
     files = os.listdir(os.path.sep.join(['dataset', 'classes', c]))
     for f in files:
         try:
-            orig_img = cv2.imread(os.path.sep.join(['dataset', 'classes_cropped', c, f]))
+            orig_img = cv2.imread(os.path.sep.join(['dataset', 'classes', c, f]))
             g_channel = orig_img[:,:,1]
             _, thresh_img = cv2.threshold(g_channel,15,255,cv2.THRESH_BINARY)
 
