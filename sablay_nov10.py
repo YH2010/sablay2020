@@ -22,7 +22,7 @@ sys.stdout.write("Output Folder : %s\n\n"%(str(config.TIME)))
 
 sys.stdout.write("Preprocessing Steps : Green-filter, ROI, Histogram, Resize\n\n")
 
-device = 1
+device = 0
 if torch.cuda.is_available():
     torch.cuda.set_device(device)
 
