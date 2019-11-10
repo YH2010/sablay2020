@@ -7,6 +7,7 @@ ORIGINAL_INPUT_TESTING_IMAGES_PATH = "ODIR-5K/ODIR-5K_Testing_Images"
 ORIGINAL_INPUT_LABELS_FILE = "ODIR-5K/ODIR-5K_Training_Annotations(Updated)_V2.csv"
 
 DATASET_CLASSES_PATH = "dataset/classes"
+DATASET_CLASSES_CROPPED_PATH = "dataset/classes_cropped"
 DATASET_DATASET_PATH = "dataset/dataset"
 OUTPUT_PATH = "output"
 
