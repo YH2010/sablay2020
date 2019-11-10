@@ -60,7 +60,7 @@ class ImageFolderRevised(datasets.ImageFolder):
         # g_channel_bound = cv2.rectangle(g_channel,(x,y,w,h),255,5)
         # g_channel_crop = g_channel[y:y+h, x:x+w]
         # image = cv2.equalizeHist(g_channel_crop)
-        image = cv2.imread(path)
+        image = cv2.imread(path,cv2.IMREAD_GRAYSCALE)
         image = cv2.equalizeHist(image)
         image = cv2.resize(image, (224, 224))
         image = image.reshape((1, 224, 224))
